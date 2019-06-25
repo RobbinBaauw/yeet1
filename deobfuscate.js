@@ -44,19 +44,10 @@ doSomething = (a, b) => {
 
     regex();
 
-    logStr(a);
+    logStr("Result part: " + a);
 
     return NaN
 };
-
-doSomethingElse = (s) => {
-    regex();
-    process.exit(s) // Quit
-
-    // Grab everything left of the dot and add one
-    return s.split(".")[0] + 1
-};
-
 
 // Numbers to convert to base42 (in order)
 res = [];
@@ -82,22 +73,20 @@ with (Math) {
 
                     doSomething(pp);
 
-                    with (Date) {
-                        if (number[now() - now()] == length - 4 && number[length - 3] == "8") {
-                            setNumber("4".repeat(number.length))
-                        }
+                    // If starts with 3
+                    // And 5th char is 8
+                    if (number[0] == 3 && number[4] == "8") {
+                        setNumber("4".repeat(number.length))
                     }
 
                     return () => {
                         if (number[0] == 6) {
                             let s = doSomething("\nGood job! You found the flag!\n");
-                            let a = doSomethingElse(42.42);
-                            console.log(a);
+                            process.exit(42.42);
                         }
                         if (!res.length) {
                             let b = doSomething("\n");
-                            let a = doSomethingElse(b);
-                            console.log(a + b - 1)
+                            process.exit(b);
                         }
                     };
                 case typeof (() => {
