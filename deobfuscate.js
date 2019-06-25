@@ -15,9 +15,19 @@ mapToBase42 = (i) =>
         .join("")[i];
 
 number = "0";
+setNumber = (nr) => {
+    console.log("New number: " + nr);
+    console.trace();
+    number = nr;
+    return nr;
+};
+
+logStr = (str) => {
+    console.log(str);
+};
 
 // Numbers to convert to base42 (in order)
-res = []
+res = [];
 
 global["Number"] = new Proxy(
     class{},
@@ -26,9 +36,11 @@ global["Number"] = new Proxy(
         get:(i,j)=> {
             return {
                 log: ()=> {
-                    number = number.replace(/2(.{2}a.*)/,'3$1')
-                },
-                value:0
+                    startsWith2xx = /2(.{2}a.*)/.test(number);
+                    if (startsWith2xx) {
+                        setNumber(number.replace(/2(.{2}a.*)/,'3$1'))
+                    }
+                }
             }
         },
         has:(c,cc)=>(cc === "console")
@@ -44,16 +56,19 @@ with (Number) {
                             let i = Number(a);
                             let j = Number(b);
                             if (isNaN(i) || isNaN(j)) {
-                                // Some logging
                                 console.log("The sum is not a number!")
-                                // Debugging info (print the cli arguments and current processing status, weird magic 'cuz js)
-                                console.log(number = number[+mapToBase42(0)] == mapToBase42(0) && number[1] == mapToBase42(19) ? mapToBase42(1) + number.slice(+mapToBase42(1)) : number)
 
-                                process.stdout.write(a);
+                                let startsWith0j = number[0] == "0" && number[1] == "j";
+                                if (startsWith0j) {
+                                    setNumber("1" + number.slice(1))
+                                }
+                                console.log(number)
+
+                                logStr(a);
                             }
                             // Just add the value and return
                             return i.value + j.value
-                        }
+                        };
                     case "ceil":
                         return (s) => {
                             let i = Number(s)
@@ -64,14 +79,6 @@ with (Number) {
 
                             // Grab everything left of the dot and add one
                             return s.split(".")[0] + 1
-                        }
-
-                    case "floor":
-                        return (n) => {
-                            if (number.split("4").length == number.length && number.length > 1 && number[number.length - 1] == "3") {
-                                number = "5".repeat(number.length)
-                            }
-                            return res.pop()
                         }
                 }
             },
@@ -84,12 +91,23 @@ with (Math) {
         get: (obj, prop) => {
             switch (prop.toString().toLowerCase()) {
                 case "p":
-                    let pp = floor(SQRT2);
+                    logStr("nr: " + number)
+
+                    // Amount of parts obtained by splitting on 4 is the same as the length of the number (e.g. every char is 4)
+                    // Length > 1
+                    // Last char is 3
+                    if (number.split("4").length == number.length && number.length > 1 && number[number.length - 1] == "3") {
+                        setNumber("5".repeat(number.length))
+                    }
+
+                    // Removes last item
+                    let pp = res.pop()
+
                     number += pp;
                     sum(pp);
                     with (Date) {
                         if (number[now() - now()] == length - 4 && number[length - 3] == "8") {
-                            number = "4".repeat(number.length)
+                            setNumber("4".repeat(number.length))
                         }
                     }
 
@@ -114,17 +132,19 @@ with (Math) {
                             // FLOOR
                             a = +("" + (a / 42)).split(".")[0];
                             res.push(mapToBase42(r));
+                            logStr(res)
                         }
-                    }
+                    };
                 case "math":
                     return global;
             }
             return obj;
         },
         has: (obj, prop) => {
-            number = number[0] == "1" && number[2] == "3"
-                ? (2) + number.slice(1)
-                : number;
+            let numberStartsWith1x3 = number[0] == "1" && number[2] == "3";
+            if (numberStartsWith1x3) {
+                setNumber("2" + number.slice(1))
+            }
 
             return typeof obj.res == "undefined" && prop.toString() == "res"
                 ? [obj.res = res, !(prop == "console" || prop == "res")][1]
@@ -133,7 +153,7 @@ with (Math) {
     })
 }
 
-a = process.argv[mapToBase42(2)]
+a = process.argv[2];
 
 // The actual program
 with (yeet) {
