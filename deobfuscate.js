@@ -26,72 +26,47 @@ logStr = (str) => {
     console.log(str);
 };
 
+regex = () => {
+    startsWith2xx = /2(.{2}a.*)/.test(number);
+    if (startsWith2xx) {
+        setNumber(number.replace(/2(.{2}a.*)/,'3$1'))
+    }
+};
+
+doSomething = (a, b) => {
+
+    regex();
+
+    let startsWith0j = number[0] == "0" && number[1] == "j";
+    if (startsWith0j) {
+        setNumber("1" + number.slice(1))
+    }
+
+    regex();
+
+    logStr(a);
+
+    return NaN
+};
+
+doSomethingElse = (s) => {
+    regex();
+    process.exit(s) // Quit
+
+    // Grab everything left of the dot and add one
+    return s.split(".")[0] + 1
+};
+
+
 // Numbers to convert to base42 (in order)
 res = [];
 
-global["Number"] = new Proxy(
-    class{},
-    {
-        apply:(a)=>[a],
-        get:(i,j)=> {
-            return {
-                log: ()=> {
-                    startsWith2xx = /2(.{2}a.*)/.test(number);
-                    if (startsWith2xx) {
-                        setNumber(number.replace(/2(.{2}a.*)/,'3$1'))
-                    }
-                }
-            }
-        },
-        has:(c,cc)=>(cc === "console")
-    });
-
-with (Number) {
-    with (Math) {
-        global["Math"] = new Proxy(() => {}, {
-            get: (obj, prop) => {
-                switch (prop.toString()) {
-                    case "sum":
-                        return (a, b) => {
-                            let i = Number(a);
-                            let j = Number(b);
-                            if (isNaN(i) || isNaN(j)) {
-                                console.log("The sum is not a number!")
-
-                                let startsWith0j = number[0] == "0" && number[1] == "j";
-                                if (startsWith0j) {
-                                    setNumber("1" + number.slice(1))
-                                }
-                                console.log(number)
-
-                                logStr(a);
-                            }
-                            // Just add the value and return
-                            return i.value + j.value
-                        };
-                    case "ceil":
-                        return (s) => {
-                            let i = Number(s)
-                            if (isNaN(i)) {
-                                console.log("Input must be a number!")
-                                process.exit(s) // Quit
-                            }
-
-                            // Grab everything left of the dot and add one
-                            return s.split(".")[0] + 1
-                        }
-                }
-            },
-            has: (_, f) => "mkfuB65ojcceBajPzfhC5M0LO8\\X8d0PhflzEWeT7Y4MYT0Z4OD\\Jy4lSQ2A8mrljIR8ueZf0CVUXmhdUHAsuXmJN1zUUrZDFqJdDFKnnfIheD==".includes(f.toString()[0] + f.toString()[1])
-        })
-    }
-}
 with (Math) {
     yeet = new Proxy(() => {}, {
         get: (obj, prop) => {
             switch (prop.toString().toLowerCase()) {
                 case "p":
-                    logStr("nr: " + number)
+                    logStr("nr: " + number);
 
                     // Amount of parts obtained by splitting on 4 is the same as the length of the number (e.g. every char is 4)
                     // Length > 1
@@ -101,10 +76,12 @@ with (Math) {
                     }
 
                     // Removes last item
-                    let pp = res.pop()
+                    let pp = res.pop();
 
                     number += pp;
-                    sum(pp);
+
+                    doSomething(pp);
+
                     with (Date) {
                         if (number[now() - now()] == length - 4 && number[length - 3] == "8") {
                             setNumber("4".repeat(number.length))
@@ -113,13 +90,13 @@ with (Math) {
 
                     return () => {
                         if (number[0] == 6) {
-                            let s = sum("\nGood job! You found the flag!\n");
-                            let a = ceil(42.42);
+                            let s = doSomething("\nGood job! You found the flag!\n");
+                            let a = doSomethingElse(42.42);
                             console.log(a);
                         }
                         if (!res.length) {
-                            let b = sum("\n");
-                            let a = ceil(b);
+                            let b = doSomething("\n");
+                            let a = doSomethingElse(b);
                             console.log(a + b - 1)
                         }
                     };
