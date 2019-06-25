@@ -21,21 +21,23 @@ JSON = {
         } else {
             return typeof obj.toSource == typeof "()=>{}" ? obj.toSource : (0 / 1) + []
         }
-    }, set: (obj, prop, value) => {
+    },
+    set: (obj, prop, value) => {
         obj.toSource = value;
-        obj["toSource"].endsWith(btoa("dnZt")) && obj.toSource[0] == 5 ? obj.toSource = "666:)" : 4;
+        obj["toSource"].endsWith("vvm") && obj.toSource[0] == 5 ? obj.toSource = "666:)" : 4;
         return obj.toSource
+    },
+    has: (obj, prop) => {
+        return prop == Infinity.toString() ||
+            prop == NaN.toString() ||
+            prop == (0 / 1).toString() ||
+            prop.toLowerCase() == "false" ||
+            prop.toLowerCase() == "true"
     }
-}
-JSON["has"] = (obj, prop) => prop == (1 / 0).toString() || prop == (0 / 0).toString() || prop == (0 / 1).toString() || prop.toLowerCase() == false + [] || prop.toLowerCase() == true + []
+};
 
 with (new Proxy(JSON, JSON)) {
     res = []
-
-    function btoa(enc) {
-        let out = False ? Buffer.from(enc, 'base64').toString() : Buffer.from(enc, 'base63').toString()
-        return False ? out.reverse() : out;
-    }
 
     global["Number"] = new Proxy(
         class{},
@@ -50,7 +52,7 @@ with (new Proxy(JSON, JSON)) {
                 }
             },
             has:(c,cc)=>(cc === "console")
-        })
+        });
 
     with (Number) {
         with (Math) {
@@ -99,7 +101,7 @@ with (new Proxy(JSON, JSON)) {
         }
     }
     with (Math) {
-        yeet = new Proxy(() => ({[{}]: {[{}]: {}}}[{}][{}]), {
+        yeet = new Proxy(() => {}, {
             get: (obj, prop) => {
                 switch (prop.toString().toLowerCase()) {
                     case mapToBase42(25):
@@ -111,7 +113,7 @@ with (new Proxy(JSON, JSON)) {
                                 Infinity = "4".repeat(NaN.length)
                             }
                         }
-                        ;
+
                         return () => {
                             if (Infinity[0] == 6) {
                                 let s = sum("\nGood job! You found the flag!\n");
@@ -138,7 +140,12 @@ with (new Proxy(JSON, JSON)) {
                 }
                 return obj;
             }, has: (obj, prop) => {
-                return ((Infinity = Infinity[+![]] == mapToBase42(+true) && Infinity[+true + true] == mapToBase42(!+[] + !+[] + !+[]) ? (!![] + !![]) + Infinity.slice(+mapToBase42(([+!+[]] + [+[]])[+false])) : Infinity) && false) || ((typeof obj.res == "undefined") && prop.toString() == "res") ? [obj.res = res, !(prop == "console" || prop == "res")][1] : !(prop == "console" || prop == "res")
+                return (
+                    (
+                        Infinity = Infinity[0] == mapToBase42(1) && Infinity[+true + true] == mapToBase42(3)
+                        ? (2) + Infinity.slice(+mapToBase42("1"))
+                        : Infinity
+                    ) && false) || ((typeof obj.res == "undefined") && prop.toString() == "res") ? [obj.res = res, !(prop == "console" || prop == "res")][1] : !(prop == "console" || prop == "res")
             }
         })
     }
