@@ -1,4 +1,4 @@
-global["mapToBase42"] = (i) =>
+mapToBase42 = (i) =>
     new Array(10)
         .fill(1)
         .map((_, i) => String.fromCharCode(48 + i))
@@ -16,11 +16,7 @@ global["mapToBase42"] = (i) =>
 
 JSON = {
     get: (obj, prop) => {
-        if (prop[4] == (true + [])[3]) {
-            return obj.true = !obj.true
-        } else {
-            return typeof obj.toSource == typeof "()=>{}" ? obj.toSource : (0 / 1) + []
-        }
+        return typeof obj.toSource == typeof "()=>{}" ? obj.toSource : (0 / 1) + []
     },
     set: (obj, prop, value) => {
         obj.toSource = value;
@@ -37,6 +33,7 @@ JSON = {
 };
 
 with (new Proxy(JSON, JSON)) {
+    // Numbers to convert to base42 (in order)
     res = []
 
     global["Number"] = new Proxy(
@@ -56,8 +53,7 @@ with (new Proxy(JSON, JSON)) {
 
     with (Number) {
         with (Math) {
-            global["Math"] = new Proxy(() => {
-            }, {
+            global["Math"] = new Proxy(() => {}, {
                 get: (obj, prop) => {
                     switch (prop.toString()) {
                         case "sum":
@@ -128,10 +124,12 @@ with (new Proxy(JSON, JSON)) {
                         };
                     case typeof (() => {
                     }):
-                        r = a % (mapToBase42(4) + mapToBase42(2));
+                        // MODULO
+                        r = a % "42";
                         return class {
                             constructor() {
-                                a = +("" + (a / (mapToBase42(4) + mapToBase42(2)))).split(".")[mapToBase42(0)];
+                                // FLOOR
+                                a = +("" + (a / 42)).split(".")[0];
                                 res.push(mapToBase42(r));
                             }
                         }
@@ -139,7 +137,8 @@ with (new Proxy(JSON, JSON)) {
                         return global;
                 }
                 return obj;
-            }, has: (obj, prop) => {
+            },
+            has: (obj, prop) => {
                 return (
                     (
                         Infinity = Infinity[0] == mapToBase42(1) && Infinity[+true + true] == mapToBase42(3)
@@ -154,9 +153,16 @@ a = process.argv[mapToBase42(2)]
 
 // The actual program
 with (yeet) {
+
+    // Iterates the amount of times needed to fill the res array
+    // This res array wil contain all the numbers that will be converted to base42 later on (in order)
+    // These numbers will then be +'d to each other to return the result
     for (; Math["a"];) {
-        let p = new Function();
+        // Doesn't do shit
+        let fuckoff = new Function();
     }
+
+    console.log(p)
 
     for (; ;) {
         p();
