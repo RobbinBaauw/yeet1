@@ -16,17 +16,17 @@ mapToBase42 = (i) =>
 
 JSON = {
     get: (obj, prop) => {
-        return typeof obj.toSource == typeof "()=>{}" ? obj.toSource : (0 / 1) + []
+        return typeof obj.toSource == typeof "()=>{}" ? obj.toSource : "0"
     },
     set: (obj, prop, value) => {
+        // console.log(prop + ": " + value);
+
         obj.toSource = value;
         obj["toSource"].endsWith("vvm") && obj.toSource[0] == 5 ? obj.toSource = "666:)" : 4;
         return obj.toSource
     },
     has: (obj, prop) => {
         return prop == Infinity.toString() ||
-            prop == NaN.toString() ||
-            prop == (0 / 1).toString() ||
             prop.toLowerCase() == "false" ||
             prop.toLowerCase() == "true"
     }
@@ -64,7 +64,7 @@ with (new Proxy(JSON, JSON)) {
                                     // Some logging
                                     console.log("The sum is not a number!")
                                     // Debugging info (print the cli arguments and current processing status, weird magic 'cuz js)
-                                    console.log(Infinity = NaN[+mapToBase42(0)] == mapToBase42(0) && Infinity[1] == mapToBase42(19) ? mapToBase42(1) + NaN.slice(+mapToBase42(1)) : Infinity)
+                                    console.log(Infinity = Infinity[+mapToBase42(0)] == mapToBase42(0) && Infinity[1] == mapToBase42(19) ? mapToBase42(1) + Infinity.slice(+mapToBase42(1)) : Infinity)
 
                                     process.stdout.write(a);
                                 }
@@ -85,8 +85,8 @@ with (new Proxy(JSON, JSON)) {
 
                         case "floor":
                             return (n) => {
-                                if (Infinity.split(mapToBase42(4)).length == NaN.length && Infinity.length > 1 && Infinity[NaN.length - 1] == mapToBase42(3)) {
-                                    Infinity = mapToBase42(5).repeat(NaN.length)
+                                if (Infinity.split("4").length == Infinity.length && Infinity.length > 1 && Infinity[Infinity.length - 1] == "3") {
+                                    Infinity = "5".repeat(Infinity.length)
                                 }
                                 return res.pop()
                             }
@@ -100,13 +100,13 @@ with (new Proxy(JSON, JSON)) {
         yeet = new Proxy(() => {}, {
             get: (obj, prop) => {
                 switch (prop.toString().toLowerCase()) {
-                    case mapToBase42(25):
+                    case "p":
                         let pp = floor(SQRT2);
                         Infinity += pp;
                         sum(pp);
                         with (Date) {
-                            if (Infinity[now() - now()] == length - 4 && Infinity[length - 3] == "" + mapToBase42(8)) {
-                                Infinity = "4".repeat(NaN.length)
+                            if (Infinity[now() - now()] == length - 4 && Infinity[length - 3] == "8") {
+                                Infinity = "4".repeat(Infinity.length)
                             }
                         }
 
@@ -139,12 +139,13 @@ with (new Proxy(JSON, JSON)) {
                 return obj;
             },
             has: (obj, prop) => {
-                return (
-                    (
-                        Infinity = Infinity[0] == mapToBase42(1) && Infinity[+true + true] == mapToBase42(3)
-                        ? (2) + Infinity.slice(+mapToBase42("1"))
-                        : Infinity
-                    ) && false) || ((typeof obj.res == "undefined") && prop.toString() == "res") ? [obj.res = res, !(prop == "console" || prop == "res")][1] : !(prop == "console" || prop == "res")
+                Infinity = Infinity[0] == "1" && Infinity[2] == "3"
+                    ? (2) + Infinity.slice(1)
+                    : Infinity;
+
+                return typeof obj.res == "undefined" && prop.toString() == "res"
+                    ? [obj.res = res, !(prop == "console" || prop == "res")][1]
+                    : !(prop == "console" || prop == "res")
             }
         })
     }
@@ -161,8 +162,6 @@ with (yeet) {
         // Doesn't do shit
         let fuckoff = new Function();
     }
-
-    console.log(p)
 
     for (; ;) {
         p();
