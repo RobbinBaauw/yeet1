@@ -16,9 +16,12 @@ mapToBase42 = (i) =>
 
 number = "0";
 setNumber = (nr) => {
+    number = nr;
+
+    nr.endsWith("vvm") && number[0] == 5 ? number = "666:)" : 4;
+
     console.log("New number: " + nr);
     console.trace();
-    number = nr;
     return nr;
 };
 
@@ -59,7 +62,7 @@ with (Math) {
                 case "p":
                     logStr("nr: " + number);
 
-                    // Amount of parts obtained by splitting on 4 is the same as the length of the number (e.g. every char is 4)
+                    // Amount of parts obtained by splitting on 4 is the same as the length of the number
                     // Length > 1
                     // Last char is 3
                     if (number.split("4").length == number.length && number.length > 1 && number[number.length - 1] == "3") {
@@ -92,7 +95,7 @@ with (Math) {
                 case typeof (() => {
                 }):
                     // MODULO
-                    r = a % "42";
+                    r = a % 42;
                     return class {
                         constructor() {
                             // FLOOR
